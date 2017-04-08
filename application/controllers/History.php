@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * This is the controller for the History page.
+ * This uses Histories model to populate page data.
+ *
+ * @author Amir
+ */
 class History extends Application
 {
     function __construct()
@@ -21,15 +27,15 @@ class History extends Application
         $this->data['pagetitle'] = 'History';
         $this->data['pagebody'] = 'history';
 
-        $this->load->model('histories');
-        $source = $this->histories->all();
+        //$this->load->model('histories');
+        //$source = $this->histories->all();
 
         $history_list = array();
 
-        foreach ($source as $record)
+        foreach ($this->histories->all() as $record)
         {
-            $history_list[] = array('id' => $record['id'], 'historyType' => $record['historyType'], 'dateTime' => $record['dateTime'],
-                'cost' => $record['cost'], 'revenue' => $record['revenue']);
+            $history_list[] = array('id' => $record->id, 'historyType' => $record->transactionType, 
+                                    'dateTime' => $record->dateTime,'value' => $record->value);
         }
 
         $this->data['history'] = $history_list;
